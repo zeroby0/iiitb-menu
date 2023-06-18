@@ -1,0 +1,389 @@
+{
+    "Sunday": {
+        "dates": [
+            "June 11th 2023",
+            "June 18th 2023"
+        ],
+        "catalog": [
+            {
+                "title": "Breakfast",
+                "items": [
+                    "Semiya Upma",
+                    "Punugulu",
+                    "Ketchup",
+                    "Pudhina Chutney"
+                ]
+            },
+            {
+                "title": "Lunch",
+                "items": [
+                    "Bhature",
+                    "Chole Masala",
+                    "Mexican Rice",
+                    "Plain Rice",
+                    "Arrar Dal",
+                    "Pepper Rasam",
+                    "Sweet Lassi",
+                    "Onion\\Chilli\\Lemon",
+                    "Gulab Jamun"
+                ]
+            },
+            {
+                "title": "Snacks",
+                "items": [
+                    "Pani Poori",
+                    "Tea/Coffee/Milk"
+                ]
+            },
+            {
+                "title": "Dinner",
+                "items": [
+                    "Chapati",
+                    "Veg Manchurian",
+                    "Chana Pulao",
+                    "Plain Rice",
+                    "Dal Tadka",
+                    "Onion Sambar",
+                    "Curd",
+                    "Sporut Salad",
+                    "Rasmalai",
+                    "Kadai Paneer",
+                    "Kadai Chicken"
+                ]
+            }
+        ]
+    },
+    "Monday": {
+        "dates": [
+            "June 05th 2023",
+            "June 12th 2023"
+        ],
+        "catalog": [
+            {
+                "title": "Breakfast",
+                "items": [
+                    "Idli",
+                    "Vada",
+                    "Samber",
+                    "Coconut Chutney",
+                    "Boiled Egg"
+                ]
+            },
+            {
+                "title": "Lunch",
+                "items": [
+                    "Methi Chapati",
+                    "Aloo Tamatar Curry",
+                    "Tawa Subz Masala",
+                    "Kothmiri Rice",
+                    "Plain Rice",
+                    "Dal Palak",
+                    "Madras Rasam",
+                    "Curd",
+                    "Green Salad",
+                    "Rasagolla"
+                ]
+            },
+            {
+                "title": "Snacks",
+                "items": [
+                    "Pav Bhuji",
+                    "Tea/Coffee/Milk"
+                ]
+            },
+            {
+                "title": "Dinner",
+                "items": [
+                    "Ajwain Chapati",
+                    "Subz Lababdar",
+                    "Jeera Aloo Gobi",
+                    "Mutter Pulao",
+                    "Plain Rice",
+                    "Dal Fry",
+                    "Veg Sambar",
+                    "Butter Milk",
+                    "Sprouts Salad",
+                    "Malpua Rabdi"
+                ]
+            }
+        ]
+    },
+    "Tuesday": {
+        "dates": [
+            "June 06th 2023",
+            "June 13th 2023"
+        ],
+        "catalog": [
+            {
+                "title": "Breakfast",
+                "items": [
+                    "Mix Veg Paratha",
+                    "Curd",
+                    "Malala Upma",
+                    "Tomato Chutney"
+                ]
+            },
+            {
+                "title": "Lunch",
+                "items": [
+                    "Pudina Chapati",
+                    "Cauliflower Aloo",
+                    "Subz Panchamel",
+                    "Veg Dum Biryani",
+                    "Plain Rice",
+                    "Dal Tadka",
+                    "Drumstick Sambar",
+                    "Veg Raita",
+                    "Green Salad",
+                    "Semiya Payasam"
+                ]
+            },
+            {
+                "title": "Snacks",
+                "items": [
+                    "Spring Rolls",
+                    "Coconut Chutney",
+                    "Tea/Coffee/Milk"
+                ]
+            },
+            {
+                "title": "Dinner",
+                "items": [
+                    "Chapati",
+                    "Navaratan Korma",
+                    "Bhindi Amchuri",
+                    "Veg Pulao",
+                    "Plain Rice",
+                    "Dal Panchmel",
+                    "Tomato Rasaam",
+                    "Curd",
+                    "Veg Corn Salad",
+                    "Badusha"
+                ]
+            }
+        ]
+    },
+    "Wednesday": {
+        "dates": [
+            "June 07th 2023",
+            "June 14th 2023"
+        ],
+        "catalog": [
+            {
+                "title": "Breakfast",
+                "items": [
+                    "Pessarattu",
+                    "Poha",
+                    "Veg Sambhar",
+                    "Coconut Chutney",
+                    "Omelette"
+                ]
+            },
+            {
+                "title": "Lunch",
+                "items": [
+                    "Poori",
+                    "Aloo Bhaji",
+                    "Black Chana Masala",
+                    "Jeera Pulao",
+                    "Plain Rice",
+                    "Yellow Moong Dal",
+                    "Tomato Rasam",
+                    "Curd",
+                    "Green Salad",
+                    "Lancha"
+                ]
+            },
+            {
+                "title": "Snacks",
+                "items": [
+                    "Samosa",
+                    "Sweet Chutney",
+                    "Tea/Coffee/Milk"
+                ]
+            },
+            {
+                "title": "Dinner",
+                "items": [
+                    "Palak Chapati",
+                    "Aloo 65",
+                    "Veg Kadai",
+                    "Plain Rice",
+                    "Punjabi Dal Tadka",
+                    "Radish Sambar",
+                    "Boondi Raita",
+                    "Kala Chana Chat",
+                    "Fruit Custard",
+                    "Paneer Biriyani",
+                    "Chicken Biriyani"
+                ]
+            }
+        ]
+    },
+    "Thursday": {
+        "dates": [
+            "June 08th 2023",
+            "June 15th 2023"
+        ],
+        "catalog": [
+            {
+                "title": "Breakfast",
+                "items": [
+                    "Aloo Paratha",
+                    "Curd",
+                    "Mint Chutney",
+                    "Watermalon Juice"
+                ]
+            },
+            {
+                "title": "Lunch",
+                "items": [
+                    "Masala Chapati",
+                    "Aloo Karela Dry",
+                    "Veg Chettinad",
+                    "Curd Rice",
+                    "Plain Rice",
+                    "Rajma Masala",
+                    "Vegatable Sambar",
+                    "Lemonade",
+                    "Green Salad",
+                    "Besan Burfi"
+                ]
+            },
+            {
+                "title": "Snacks",
+                "items": [
+                    "Coleslaw Sandwich",
+                    "Ketchup",
+                    "Tea/Coffee/Milk"
+                ]
+            },
+            {
+                "title": "Dinner",
+                "items": [
+                    "Methi Chapati",
+                    "Subz Khurchan",
+                    "Live Pasta (Mix Sauce)",
+                    "Gobi Ki Thari",
+                    "Plain Rice",
+                    "Dal Lasooni Tadka",
+                    "Pepper Resam",
+                    "Curd",
+                    "Green Salad",
+                    "Jalebi With Rabdi"
+                ]
+            }
+        ]
+    },
+    "Friday": {
+        "dates": [
+            "June 09th 2023",
+            "June 16th 2023"
+        ],
+        "catalog": [
+            {
+                "title": "Breakfast",
+                "items": [
+                    "Masala Uttpam",
+                    "Pongal",
+                    "Samber",
+                    "Mint Chutney",
+                    "Egg Bhurji"
+                ]
+            },
+            {
+                "title": "Lunch",
+                "items": [
+                    "Chapati",
+                    "Punjabi Kadhi",
+                    "Dum Aloo",
+                    "Veg  Biriyani",
+                    "Plain Rice",
+                    "Dal Masala",
+                    "Jeera Rasam",
+                    "Mix Veg Raita",
+                    "Punjabi Salad",
+                    "Pastry"
+                ]
+            },
+            {
+                "title": "Snacks",
+                "items": [
+                    "Papdi Chat",
+                    "Tea/Coffee/Milk"
+                ]
+            },
+            {
+                "title": "Dinner",
+                "items": [
+                    "Tawa Paratha",
+                    "Honey Chilli Potato",
+                    "Jeera Mutter Ka Pulao",
+                    "Plain Rice",
+                    "Green Moong Dal",
+                    "Pumpkin Sambar",
+                    "Curd",
+                    "Russian Salad",
+                    "Anguri Rabdi",
+                    "Paneer Patiala",
+                    "Chicken Patiala"
+                ]
+            }
+        ]
+    },
+    "Saturday": {
+        "dates": [
+            "June 10th 2023",
+            "June 17th 2023"
+        ],
+        "catalog": [
+            {
+                "title": "Breakfast",
+                "items": [
+                    "Masala Dosa",
+                    "Veg Upma",
+                    "Veg Sambhar",
+                    "Coconut Chutney"
+                ]
+            },
+            {
+                "title": "Lunch",
+                "items": [
+                    "Methi Chapati",
+                    "Aloo Simla Mirch",
+                    "Soya Masala/Egg Curry",
+                    "Corn Pulao",
+                    "Plain Rice",
+                    "Dal Tadka",
+                    "Carrot Raddish Sambar",
+                    "Curd",
+                    "Russian Salad",
+                    "Mango Milk Shake"
+                ]
+            },
+            {
+                "title": "Snacks",
+                "items": [
+                    "Onion Kochari",
+                    "Sweet Chutney",
+                    "Tea/Coffee/Milk"
+                ]
+            },
+            {
+                "title": "Dinner",
+                "items": [
+                    "Jeera Chapati",
+                    "Dahi Arbi",
+                    "Stir Fry Veg",
+                    "Veg Fried Rice",
+                    "Plain Rice",
+                    "Dal Makhani",
+                    "Tamrind Rasam",
+                    "Butter Milk",
+                    "Green Salad",
+                    "Rice Kheer"
+                ]
+            }
+        ]
+    }
+}

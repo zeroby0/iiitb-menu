@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Jumping scroll bar fixes */
+html {
+    width: 100vw;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+}
+
+::selection {
+    @apply bg-amber-50 text-amber-900;
+}
+
+pre {
+    @apply my-4 leading-relaxed;
+    @apply bg-gray-800 text-gray-200;
+    overflow: auto;
+}
+
+ul {
+    @apply list-disc list-inside;
+}
+
+ol {
+    @apply list-decimal list-inside;
+}
+
+li {
+    @apply text-lg lg:my-1 leading-relaxed;
+}

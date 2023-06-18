@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <style>
+        {% cssconcat %}
+    </style>
+    <link rel="manifest" href="/manifest.webmanifest">
+  </head>
+  <body>
+
+    <main class="text-stone-300 bg-stone-950 leading-normal flex flex-row overflow-x-scroll snap-x scroll-smooth snap-mandatory md:snap-none">
+
+      {% set idPrefix = 'pre-' %}
+      {% set hiddenOnLG = true %}
+      {% for day, daydata in menu %}
+        {% include "./includes/DayView.njk" %}
+      {% endfor %} 
+
+      {% set idPrefix = '' %}
+      {% set hiddenOnLG = false %}
+      {% for day, daydata in menu %}
+        {% include "./includes/DayView.njk" %}
+      {% endfor %} 
+
+      {% set idPrefix = 'post-' %}
+      {% set hiddenOnLG = true %}
+      {% for day, daydata in menu %}
+        {% include "./includes/DayView.njk" %}
+      {% endfor %} 
+
+    </main>
+
+  <script>
+
+    function align_sections(selector) {
+      // Select all div elements with class '.lunch'
+      var lunchDivs = document.querySelectorAll(selector);
+
+      // Find the maximum height among the divs
+      var maxHeight = 0;
+      lunchDivs.forEach(function(div) {
+        var height = div.offsetHeight;
+        if (height > maxHeight) {
+          maxHeight = height;
+        }
+      });
+
+      // Set the maximum height for all the divs
+      lunchDivs.forEach(function(div) {
+        div.style.height = maxHeight + 'px';
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Code to execute after the document is ready
+      align_sections('div.Breakfast');
+      align_sections('div.Lunch');
+      align_sections('div.Snacks');
+      align_sections('div.Dinner');
+
+      const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+      const element = document.getElementById(today);
+
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+  </script>
+
+  </body>
+</html>
