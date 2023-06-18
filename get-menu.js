@@ -10,7 +10,7 @@ const password = process.env.MS_PASSWORD;
 const selector_username = 'input[name="loginfmt"]';
 
 console.log("Username: ", username);
-console.log("Password: ", password);
+// console.log("Password: ", password);
 
 (async () => {
   const browser = await chromium.launch();
@@ -22,38 +22,36 @@ console.log("Password: ", password);
 
   // This page will ask for login
   await page.goto(url_login);
-  console.log("Page goto url login");
+  console.log("Opened Login Page");
 
   // Wait for the sign-in form to appear and fill in the credentials
   await page.waitForSelector(selector_username);
   await page.fill(selector_username, username);
   await page.click('#idSIButton9');
-  console.log("Username");
+  console.log("Entered Username");
 
   await page.waitForSelector('#i0118');
   await page.fill('#i0118', password);
   await page.click('#idSIButton9');
-  console.log("Password");
+  console.log("Entered Password");
 
 
   // Keep Signed in?
   await page.waitForSelector('input[name="DontShowAgain"]')
   await page.click('input[type="button"]');
-  console.log("Don't remember");
+  console.log("Selected Don't remember");
 
 
   // Start waiting for download before clicking. Note no await.
+  console.log("Starting Download");
   const downloadPromise = page.waitForEvent('download');
   page.goto(url_download);
   const download = await downloadPromise;
 
-  // Wait for the download process to complete.
-  console.log(await download.path());
-
   const download_path = await download.path();
 
   fs.copyFileSync(download_path, './data/IIITB-Menu.xlsx');
-  console.log("Download complete. Copied");
+  console.log("XLSX file downloaded and copied.");
 
   await browser.close();
 })();
