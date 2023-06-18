@@ -1,0 +1,7 @@
+[build]
+    base = "./"
+    command = "node get-menu.js; python3 process-xlsx.py; npm run build;"
+    publish = "_site"
+
+[[plugins]]
+  package = "@netlify/plugin-python"

@@ -1,0 +1,55 @@
+const fs = require('fs');
+const { chromium } = require('playwright');
+
+const url_login = 'https://iiitbac-my.sharepoint.com/:x:/r/personal/foodcommittee_iiitb_ac_in/Documents/IIITB-Menu.xlsx?d=w9345dc2a600f4e5a824d9510f774cddf&csf=1&web=1&e=cMYLbj';
+const url_download = 'https://iiitbac-my.sharepoint.com/:x:/r/personal/foodcommittee_iiitb_ac_in/Documents/IIITB-Menu.xlsx';
+
+const username = process.env.MS_USERNAME;
+const password = process.env.MS_PASSWORD;
+
+const selector_username = 'input[name="loginfmt"]'
+
+(async () => {
+  const browser = await chromium.launch();
+
+  const context = await browser.newContext();
+  const page = await context.newPage();
+
+  console.log("Started")
+
+  // This page will ask for login
+  await page.goto(url_login);
+
+  // Wait for the sign-in form to appear and fill in the credentials
+  await page.waitForSelector(selector_username);
+  await page.fill(selector_username, username);
+  await page.click('#idSIButton9');
+  console.log("Username");
+
+  await page.waitForSelector('#i0118');
+  await page.fill('#i0118', password);
+  await page.click('#idSIButton9');
+  console.log("Password");
+
+
+  // Keep Signed in?
+  await page.waitForSelector('input[name="DontShowAgain"]')
+  await page.click('input[type="button"]');
+  console.log("Don't remember");
+
+
+  // Start waiting for download before clicking. Note no await.
+  const downloadPromise = page.waitForEvent('download');
+  page.goto(url_download);
+  const download = await downloadPromise;
+
+  // Wait for the download process to complete.
+  console.log(await download.path());
+
+  const download_path = await download.path();
+
+  fs.copyFileSync(download_path, './data/IIITB-Menu.xlsx');
+  console.log("Download complete. Copied");
+
+  await browser.close();
+})();
