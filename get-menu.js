@@ -53,5 +53,7 @@ console.log("Username: ", username);
   fs.copyFileSync(download_path, './data/IIITB-Menu.xlsx');
   console.log("XLSX file downloaded and copied.");
 
+  page.close();
+
   await browser.close();
 })();
