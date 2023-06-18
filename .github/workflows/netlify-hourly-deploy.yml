@@ -2,7 +2,7 @@ name: nightly-netlify-build
 
 on:
   schedule:
-    - cron: "* */6 * * *"
+    - cron: "* */8 * * *"
 
 jobs:
   build:
@@ -10,5 +10,4 @@ jobs:
 
     steps:
       - name: trigger netlify build
-        run: |
-          curl -X POST -d '{}' ${{ secrets.NETLIFY_DEPLOY_HOOK }}
+        run: curl -X POST -d '{}' ${{ secrets.NETLIFY_DEPLOY_HOOK }}
