@@ -1,4 +1,4 @@
 [build]
     base = "./"
-    command = "npx playwright install; node get-menu.js; python3 process-xlsx.py; npm run build;"
+    command = "npx playwright install; node get-menu.js; pipx install poetry==1.5.1; poetry install; python3 process-xlsx.py; npm run build;"
     publish = "_site"
