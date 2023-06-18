@@ -7,18 +7,24 @@ const url_download = 'https://iiitbac-my.sharepoint.com/:x:/r/personal/foodcommi
 const username = process.env.MS_USERNAME;
 const password = process.env.MS_PASSWORD;
 
-const selector_username = 'input[name="loginfmt"]'
+const selector_username = 'input[name="loginfmt"]';
+
+console.log("Username: ", username);
+console.log("Password: ", password);
 
 (async () => {
-  const browser = await chromium.launch();
+  const browser = await chromium.launch({
+    'headless': false
+  });
 
   const context = await browser.newContext();
   const page = await context.newPage();
 
-  console.log("Started")
+  console.log("Started");
 
   // This page will ask for login
   await page.goto(url_login);
+  console.log("Page goto url login");
 
   // Wait for the sign-in form to appear and fill in the credentials
   await page.waitForSelector(selector_username);
