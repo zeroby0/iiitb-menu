@@ -2,7 +2,7 @@ name: nightly-netlify-build
 
 on:
   schedule:
-    - cron: "* */8 * * *"
+    - cron: "* */3 * * *"
 
 jobs:
   build:
