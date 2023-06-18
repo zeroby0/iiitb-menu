@@ -45,15 +45,16 @@ console.log("Username: ", username);
   // Start waiting for download before clicking. Note no await.
   console.log("Starting Download");
   const downloadPromise = page.waitForEvent('download');
+
+  // This will fail or timeout, but that's okay.
   page.goto(url_download);
+
   const download = await downloadPromise;
 
   const download_path = await download.path();
 
   fs.copyFileSync(download_path, './data/IIITB-Menu.xlsx');
   console.log("XLSX file downloaded and copied.");
-
-  page.close();
 
   await browser.close();
 })();
