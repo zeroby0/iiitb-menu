@@ -42,8 +42,9 @@
 
 
   <script>
+    let page_has_been_initialised = false;
 
-    function align_sections(selector) {
+    function align_section(selector) {
       // Select all div elements with class '.lunch'
       var lunchDivs = document.querySelectorAll(selector);
 
@@ -60,43 +61,60 @@
       lunchDivs.forEach(function(div) {
         div.style.height = maxHeight + 'px';
       });
+
+      console.log("Aligned section ", selector)
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-      // Code to execute after the document is ready
-      align_sections('div.Breakfast');
-      align_sections('div.Lunch');
-      align_sections('div.Snacks');
-      align_sections('div.Dinner');
+    function setup_page() {
+      if(page_has_been_initialised === true) return;
+
+      align_section('div.Breakfast');
+      align_section('div.Lunch');
+      align_section('div.Snacks');
+      align_section('div.Dinner');
 
       const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
       const element = document.getElementById(today);
 
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
+        console.log("Scrolled today into view")
       }
-    });
 
-    document.getElementById('rebuildButton').addEventListener('click', async function() {
-      console.log("Starting build")
+      document.getElementById('rebuildButton').addEventListener('click', async function() {
+        console.log("Starting build")
 
-      // Just a URL that makes the menu get rebuilt, don't get too excited
-      const url = 'https://api.netlify.com/build_hooks/648ffcecb9520931d2053256'
+        // Just a URL that makes the menu get rebuilt, don't get too excited
+        const url = 'https://api.netlify.com/build_hooks/648ffcecb9520931d2053256'
 
-      await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: '{}'
+        await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: '{}'
+        })
+
+        console.log("Started rebuild")
+        alert("Started rebuild. Check again in a minute")
+
+        document.getElementById('rebuildButton').style.visibility = 'hidden'
       })
+      console.log("Added click handler for rebuild button")
 
-      console.log("Started rebuild")
-      alert("Started rebuild. Check again in a minute")
 
-      document.getElementById('rebuildButton').style.visibility = 'hidden'
-    })
+      page_has_been_initialised = true;
+      console.log("Page initialisation is complete")
+    }
 
+    if (document.readyState !== 'loading') {
+      // Document already ready. Init page
+      setup_page();
+    } else {
+      document.addEventListener('DOMContentLoaded', function () {
+        setup_page();
+      });
+    }
   </script>
 
   </body>
