@@ -65,6 +65,16 @@
       console.log("Aligned section ", selector);
     }
 
+    function scroll_today_into_view() {
+      const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+      const element = document.getElementById(today);
+
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        console.log("Scrolled today into view");
+      }
+    }
+
     function setup_page() {
       if(page_has_been_initialised == true) return;
 
@@ -73,13 +83,7 @@
       align_section('div.Snacks');
       align_section('div.Dinner');
 
-      const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-      const element = document.getElementById(today);
-
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-        console.log("Scrolled today into view");
-      }
+      scroll_today_into_view()
 
       document.getElementById('rebuildButton').addEventListener('click', async function() {
         console.log("Starting build");
@@ -110,15 +114,18 @@
     if (document.readyState !== 'loading') {
       // Document already ready. Init page
       setup_page();
+      scroll_today_into_view();
     }
 
     document.addEventListener('DOMContentLoaded', function () {
       setup_page();
+      scroll_today_into_view();
     });
 
     document.addEventListener('visibilitychange', function() {
       if (document.visibilityState === 'visible') {
         setup_page();
+        scroll_today_into_view();
       }
     });
   </script>
