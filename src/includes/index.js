@@ -1,4 +1,6 @@
 const scroll_today_into_view = () => {
+    return;
+
     const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
     const element = document.getElementById(today);
 
@@ -38,23 +40,27 @@ const setup_page = () => {
 
     const buttonRebuild = document.getElementById('rebuildButton');
 
-    buttonRebuild.addEventListener('click', async () => {
-        // Just a URL that makes the menu get rebuilt, not API key, don't get too excited
-        const url_rebuild = 'https://api.netlify.com/build_hooks/648ffcecb9520931d2053256';
-
-        buttonRebuild.style.visibility = 'hidden';
-
-        await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: '{}'
+    if(buttonRebuild) {
+        buttonRebuild.addEventListener('click', async () => {
+            // Just a URL that makes the menu get rebuilt, not API key, don't get too excited
+            const url_rebuild = 'https://api.netlify.com/build_hooks/648ffcecb9520931d2053256';
+    
+            buttonRebuild.style.visibility = 'hidden';
+    
+            await fetch(url_rebuild, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: '{}'
+            })
+    
+            console.log("Rebuild Button: Initiated site rebuid.");
+            alert("Started rebuild. Check again in a minute.");
         })
-
-        console.log("Rebuild Button: Initiated site rebuid.");
-        alert("Started rebuild. Check again in a minute.");
-    })
+    } else {
+        console.log("Unexpected: Rebuild button disappeared");
+    }
 
     console.log("Added click handler for rebuild button");
     console.log("Page initialisation complete");
