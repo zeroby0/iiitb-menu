@@ -9,12 +9,12 @@
     <style>
         {% cssconcat %}
     </style>
+    <script>{% scriptconcat %}</script>
     <link rel="manifest" href="/manifest.webmanifest">
   </head>
   <body>
 
-
-    <main class="text-stone-300 bg-stone-950 leading-normal flex flex-row overflow-x-scroll snap-x scroll-smooth snap-mandatory md:snap-none">
+    <main class="text-stone-300 bg-stone-950 leading-normal flex flex-row overflow-x-scroll snap-x scroll-smooth snap-mandatory md:snap-none lg:max-w-screen">
       {% if menu is defined %}
         {% set idPrefix = 'pre-' %}
         {% set hiddenOnLG = true %}
@@ -39,102 +39,6 @@
         {% include "./includes/ErrorPage.njk" %}
       {% endif %}
     </main>
-
-
-  <script>
-    let page_has_been_initialised = false;
-
-    function align_section(selector) {
-      // Select all div elements with class '.lunch'
-      var lunchDivs = document.querySelectorAll(selector);
-
-      // Find the maximum height among the divs
-      var maxHeight = 0;
-      lunchDivs.forEach(function(div) {
-        var height = div.offsetHeight;
-        if (height > maxHeight) {
-          maxHeight = height;
-        }
-      });
-
-      // Set the maximum height for all the divs
-      lunchDivs.forEach(function(div) {
-        div.style.height = maxHeight + 'px';
-      });
-
-      console.log("Aligned section ", selector);
-    }
-
-    function scroll_today_into_view() {
-      const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-      const element = document.getElementById(today);
-
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-        console.log("Scrolled today into view");
-      }
-    }
-
-    function setup_page() {
-      if(page_has_been_initialised == true) return;
-
-      align_section('div.Breakfast');
-      align_section('div.Lunch');
-      align_section('div.Snacks');
-      align_section('div.Dinner');
-
-      scroll_today_into_view()
-
-      document.getElementById('rebuildButton').addEventListener('click', async function() {
-        console.log("Starting build");
-
-        // Just a URL that makes the menu get rebuilt, don't get too excited
-        const url = 'https://api.netlify.com/build_hooks/648ffcecb9520931d2053256';
-
-        await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: '{}'
-        });
-
-        console.log("Started rebuild");
-        alert("Started rebuild. Check again in a minute");
-
-        document.getElementById('rebuildButton').style.visibility = 'hidden';
-      })
-
-      console.log("Added click handler for rebuild button");
-
-      page_has_been_initialised = true;
-      console.log("Page initialisation is complete");
-    }
-
-    if (document.readyState !== 'loading') {
-      // Document already ready. Init page
-      setup_page();
-      scroll_today_into_view();
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-      console.log("event: DOMContentLoaded");
-      setup_page();
-      scroll_today_into_view();
-    });
-
-    document.addEventListener('visibilitychange', function() {
-      console.log("event: visibilitychange");
-      
-      if (document.visibilityState === 'visible') {
-        console.log("event: visibilitychange: page is now visible");
-        setup_page();
-        scroll_today_into_view();
-      } else {
-        console.log("event: visibilitychange: page is now INvisible"); 
-      }
-    });
-  </script>
 
   </body>
 </html>
