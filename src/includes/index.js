@@ -1,6 +1,4 @@
 const scroll_today_into_view = () => {
-    return;
-
     const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
     const element = document.getElementById(today);
 
