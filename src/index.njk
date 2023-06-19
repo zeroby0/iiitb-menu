@@ -118,14 +118,20 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
+      console.log("event: DOMContentLoaded");
       setup_page();
       scroll_today_into_view();
     });
 
     document.addEventListener('visibilitychange', function() {
+      console.log("event: visibilitychange");
+      
       if (document.visibilityState === 'visible') {
+        console.log("event: visibilitychange: page is now visible");
         setup_page();
         scroll_today_into_view();
+      } else {
+        console.log("event: visibilitychange: page is now INvisible"); 
       }
     });
   </script>
