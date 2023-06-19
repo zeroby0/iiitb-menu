@@ -13,27 +13,33 @@
   </head>
   <body>
 
+
     <main class="text-stone-300 bg-stone-950 leading-normal flex flex-row overflow-x-scroll snap-x scroll-smooth snap-mandatory md:snap-none">
-      {% set idPrefix = 'pre-' %}
-      {% set hiddenOnLG = true %}
-      {% for day, daydata in menu %}
-        {% include "./includes/DayView.njk" %}
-      {% endfor %} 
+      {% if menu is defined %}
+        {% set idPrefix = 'pre-' %}
+        {% set hiddenOnLG = true %}
+        {% for day, daydata in menu %}
+          {% include "./includes/DayView.njk" %}
+        {% endfor %} 
 
-      {% set idPrefix = '' %}
-      {% set hiddenOnLG = false %}
-      {% for day, daydata in menu %}
-        {% include "./includes/DayView.njk" %}
-      {% endfor %} 
+        {% set idPrefix = '' %}
+        {% set hiddenOnLG = false %}
+        {% for day, daydata in menu %}
+          {% include "./includes/DayView.njk" %}
+        {% endfor %} 
 
-      {% set idPrefix = 'post-' %}
-      {% set hiddenOnLG = true %}
-      {% for day, daydata in menu %}
-        {% include "./includes/DayView.njk" %}
-      {% endfor %}
+        {% set idPrefix = 'post-' %}
+        {% set hiddenOnLG = true %}
+        {% for day, daydata in menu %}
+          {% include "./includes/DayView.njk" %}
+        {% endfor %}
 
-      {% include "./includes/AboutPage.njk" %}
+        {% include "./includes/AboutPage.njk" %}
+      {% else %}
+        {% include "./includes/ErrorPage.njk" %}
+      {% endif %}
     </main>
+
 
   <script>
 
