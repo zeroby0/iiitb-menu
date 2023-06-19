@@ -28,9 +28,18 @@ df = df.replace(np.nan, '')
 df = df.applymap(lambda x: str(x).strip())
 df = df.applymap(lambda x: str(x).title())
 
-# Make datetime rows date string
-df.iloc[0] = pd.to_datetime(df.iloc[0]).dt.strftime('%B %dth %Y')
-df.iloc[1] = pd.to_datetime(df.iloc[1]).dt.strftime('%B %dth %Y')
+
+try:
+    # Make datetime rows date string
+    df.iloc[0] = pd.to_datetime(df.iloc[0]).dt.strftime('%B %dth %Y')
+    df.iloc[1] = pd.to_datetime(df.iloc[1]).dt.strftime('%B %dth %Y')
+except:
+    df.iloc[1][1] = '2023-06-26 00:00:00'
+    print("Wrong value in dates column. But proceeding anyway")
+
+    # Make datetime rows date string
+    df.iloc[0] = pd.to_datetime(df.iloc[0]).dt.strftime('%B %dth %Y')
+    df.iloc[1] = pd.to_datetime(df.iloc[1]).dt.strftime('%B %dth %Y')
 
 days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 meals = ['Breakfast', 'Lunch', 'Snacks', 'Dinner']
