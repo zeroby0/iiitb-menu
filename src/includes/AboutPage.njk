@@ -1,6 +1,7 @@
-<article class="p-10 snap-center min-h-screen w-screen bg-stone-950 flex-shrink-0 flex-grow-0 w-screen snap-always 
-md:hidden">
-    <div>
+<article class="p-10 snap-center h-screen w-screen bg-stone-950 flex-shrink-0 flex-grow-0 w-screen snap-always 
+md:hidden flex flex-col">
+
+    <div class="grow">
         <h1 class="text-3xl font-bold leading-relaxed text-stone-400 tracking-wide mt-10">Usage</h1>
         <div class="text-lg mt-4">
             <p class="mt-1">To install this webpage as an app,</p>
@@ -10,8 +11,13 @@ md:hidden">
         </div>
     </div>
 
+    <div class="mb-12">
+        <div class="w-full p-2 font-thin text-stone-300 text-center">
+            <p>Built on {% istDateString %}.</p>
+        </div>
 
-    <div class="w-full mt-32">
-        <button id="rebuildButton" class="p-4 bg-stone-900 text-stone-400 mx-auto w-full">Refresh Menu</button>
+        <div class="w-full mt-4">
+            <button id="rebuildButton" class="p-4 bg-stone-900 text-stone-400 mx-auto w-full">Refresh Menu</button>
+        </div>
     </div>
 </article>
