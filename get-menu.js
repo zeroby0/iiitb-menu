@@ -46,8 +46,11 @@ console.log("Username: ", username);
   console.log("Starting Download");
   const downloadPromise = page.waitForEvent('download');
 
-  // This will fail or timeout, but that's okay.
-  page.goto(url_download);
+  // download, wait till network response
+  // https://playwright.dev/docs/api/class-page#page-goto
+  page.goto(url_download, {
+        waitUntil: 'commit'
+  });
 
   const download = await downloadPromise;
 
