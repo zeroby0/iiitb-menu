@@ -33,17 +33,8 @@
         {% include "./includes/DayView.njk" %}
       {% endfor %}
 
+      {% include "./includes/AboutPage.njk" %}
 
-      <article class="p-10 snap-center h-min-screen w-screen bg-stone-950 flex-shrink-0 flex-grow-0 w-screen snap-always 
-      md:hidden">
-        <h1 class="text-3xl font-bold leading-relaxed text-stone-400 tracking-wide mt-10">Usage</h1>
-        <div class="text-lg mt-4">
-          <p class="mt-1">To install this webpage as an app,</p>
-          <p class="mt-1">1. Open this page in Chrome</p>
-          <p class="mt-1">2. Open the browser's menu</p>
-          <p class="mt-1">3. Click 'Install app' or 'Add to Home screen'</p>
-        </div>
-      </article>
 
     </main>
 
@@ -82,6 +73,26 @@
         element.scrollIntoView({ behavior: 'smooth' });
       }
     });
+
+    document.getElementById('rebuildButton').addEventListener('click', async function() {
+      console.log("Starting build")
+
+      // Just a URL that makes the menu get rebuilt, don't get too excited
+      const url = 'https://api.netlify.com/build_hooks/648ffcecb9520931d2053256'
+
+      await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: '{}'
+      })
+
+      console.log("Started rebuild")
+      alert("Started rebuild. Check again in a minute")
+
+      document.getElementById('rebuildButton').disabled = true;
+    })
 
   </script>
 
