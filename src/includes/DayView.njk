@@ -1,5 +1,5 @@
-<article class="p-10 lg:w-[14.2857%] lg:pl-6 snap-center min-h-screen w-screen bg-stone-950 flex-shrink-0 flex-grow-0 w-screen snap-always 
-md:w-1/3 md:snap-start lg:snap-normal lg:flex-grow lg:w-auto {{ 'lg:hidden' if hiddenOnLG }}" id="{{ idPrefix }}{{ day }}" >
+<article class="p-10 lg:w-[14.2857%] snap-center min-h-screen w-screen bg-stone-950 flex-shrink-0 flex-grow-0 w-screen snap-always 
+md:w-1/3 md:snap-start lg:snap-normal {{ 'lg:hidden' if hiddenOnLG }} lg:px-6" id="{{ idPrefix }}{{ day }}" >
     <h1 class="text-3xl font-bold leading-relaxed text-stone-400 tracking-wide mt-10">{{ day }}</h1>
     
     {% for daypart in daydata.catalog %}
@@ -14,13 +14,14 @@ md:w-1/3 md:snap-start lg:snap-normal lg:flex-grow lg:w-auto {{ 'lg:hidden' if h
     {% endfor %}
 
     <div class="mt-16 text-lg font-thin text-stone-200 lg:mt-8 lg:font-normal lg:text-stone-500">
-    <span>Menu for:</span>
-    <ul class="mt-2">
+        <span>Menu for:</span>
+        <ul class="mt-2">
 
-        {% for date in daydata.dates %}
-        <li>{{ date }}</li>
-        {% endfor %}
+            {% for date in daydata.dates %}
+            <li>{{ date }}</li>
+            {% endfor %}
 
-    </ul>
+        </ul>
     </div>
+
 </article>
