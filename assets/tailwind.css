@@ -30,3 +30,7 @@ ol {
 li {
     @apply text-lg lg:my-1 leading-relaxed;
 }
+
+article.today > h1 {
+    @apply md:text-yellow-200;
+}

@@ -4,7 +4,9 @@ const scroll_today_into_view = () => {
 
     if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
-        console.log(`Scrolled ${element.id} into view`)
+        console.log(`Scrolled ${element.id} into view`);
+
+        element.classList.add("today");
     }
 };
 
