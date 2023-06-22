@@ -1,0 +1,8 @@
+/*.png
+  Cache-Control: public, max-age=86400, stale-while-revalidate=172800
+
+/*.ico
+  Cache-Control: public, max-age=86400, stale-while-revalidate=172800
+
+/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=43200
