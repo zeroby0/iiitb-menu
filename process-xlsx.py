@@ -8,8 +8,19 @@ df = pd.read_excel('./data/IIITB-Menu.xlsx')
 
 df = df.drop('Unnamed: 1', axis=1)
 
+
+def capitalize_if_string(i):
+    if type(i) == str:
+        return i.capitalize()
+    return i
+
 # Get names of columns from Row 1
-df.columns = [i.capitalize() for i in df.iloc[0]]
+# Sometimes they somehow add NaNs into the excel file,
+# and so I'd like to ensure it's a string before calling
+# capitalize on it.
+df.columns = [capitalize_if_string(i) for i in df.iloc[0]]
+
+print(df.columns)
 
 # Remove name row
 df = df.drop(index=[0])
@@ -41,7 +52,8 @@ except:
     df.iloc[0] = pd.to_datetime(df.iloc[0]).dt.strftime('%B %dth %Y')
     df.iloc[1] = pd.to_datetime(df.iloc[1]).dt.strftime('%B %dth %Y')
 
-days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+days = ['Sunday', 'Monday', 'Tuesday',
+        'Wednesday', 'Thursday', 'Friday', 'Saturday']
 meals = ['Breakfast', 'Lunch', 'Snacks', 'Dinner']
 
 data = {}
@@ -51,18 +63,18 @@ for day in days:
         'dates': [],
         'catalog': []
     }
-    
+
     data[day]['dates'] = list(df[day][0:2])
 
     for meal in meals:
         s = df[day][df['Meal'] == meal]
         s = s[s != '']
-        
+
         data[day]['catalog'].append({
             'title': meal,
             'items': s.tolist()
         })
-        
+
 
 with open('./data/menu.json', 'w') as jsonfile:
     json.dump(data, jsonfile)
