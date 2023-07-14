@@ -14,6 +14,7 @@ def capitalize_if_string(i):
         return i.capitalize()
     return i
 
+
 # Get names of columns from Row 1
 # Sometimes they somehow add NaNs into the excel file,
 # and so I'd like to ensure it's a string before calling
@@ -52,11 +53,17 @@ except:
     df.iloc[0] = pd.to_datetime(df.iloc[0]).dt.strftime('%B %dth %Y')
     df.iloc[1] = pd.to_datetime(df.iloc[1]).dt.strftime('%B %dth %Y')
 
+
 days = ['Sunday', 'Monday', 'Tuesday',
         'Wednesday', 'Thursday', 'Friday', 'Saturday']
 meals = ['Breakfast', 'Lunch', 'Snacks', 'Dinner']
 
 data = {}
+
+
+# Replace Daal Pakwaan with Daal Bakvaas
+df[df['Meal'] == 'Snacks'] = df[df['Meal'] == 'Snacks'].apply(
+    lambda x: x.str.replace(r'Pakwaan', 'Bakvaas', case=False, regex=True))
 
 for day in days:
     data[day] = {
