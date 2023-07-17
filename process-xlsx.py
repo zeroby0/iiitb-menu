@@ -6,7 +6,10 @@ import numpy as np
 
 df = pd.read_excel('./data/IIITB-Menu.xlsx')
 
-df = df.drop('Unnamed: 1', axis=1)
+# df = df.drop('Unnamed: 1', axis=1)
+df = df.drop(df.columns[1], axis=1) # - TEMP FIX 17 JULY
+
+print(df)
 
 
 def capitalize_if_string(i):
@@ -19,12 +22,13 @@ def capitalize_if_string(i):
 # Sometimes they somehow add NaNs into the excel file,
 # and so I'd like to ensure it's a string before calling
 # capitalize on it.
-df.columns = [capitalize_if_string(i) for i in df.iloc[0]]
+# df.columns = [capitalize_if_string(i) for i in df.iloc[0]]
+df.columns = [capitalize_if_string(i) for i in df.columns] # - TEMP FIX 17 JULY
 
 print(df.columns)
 
-# Remove name row
-df = df.drop(index=[0])
+# Remove name row - TEMP FIX 17 JULY
+# df = df.drop(index=[0])
 
 # Make empty cells NaN
 df = df.replace('\xa0', np.nan)
@@ -40,6 +44,7 @@ df = df.replace(np.nan, '')
 df = df.applymap(lambda x: str(x).strip())
 df = df.applymap(lambda x: str(x).title())
 
+print(df)
 
 try:
     # Make datetime rows date string
