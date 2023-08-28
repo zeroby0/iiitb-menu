@@ -69,6 +69,9 @@ data = {}
 # Replace Daal Pakwaan with Daal Bakvaas
 df[df['Meal'] == 'Snacks'] = df[df['Meal'] == 'Snacks'].apply(
     lambda x: x.str.replace(r'Pakwaan', 'Bakvaas', case=False, regex=True))
+df[df['Meal'] == 'Snacks'] = df[df['Meal'] == 'Snacks'].apply(
+    lambda x: x.str.replace(r'Pakwan', 'Bakvaas', case=False, regex=True))
+
 
 for day in days:
     data[day] = {
