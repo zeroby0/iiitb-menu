@@ -7,13 +7,15 @@ import numpy as np
 df = pd.read_excel('./data/IIITB-Menu.xlsx')
 
 # df = df.drop('Unnamed: 1', axis=1)
-df = df.drop(df.columns[1], axis=1) # - TEMP FIX 17 JULY
+df = df.drop(df.columns[1], axis=1) # Drop the meal subtype column
 
-print(df)
+# Set the first row as names of columns
+df.columns = df.iloc[0]
+df = df.drop(df.index[0])
 
 
 def capitalize_if_string(i):
-    if type(i) == str:
+    if isinstance(i, str):
         return i.capitalize()
     return i
 
@@ -25,8 +27,6 @@ def capitalize_if_string(i):
 # df.columns = [capitalize_if_string(i) for i in df.iloc[0]]
 df.columns = [capitalize_if_string(i) for i in df.columns] # - TEMP FIX 17 JULY
 
-print(df.columns)
-
 # Remove name row - TEMP FIX 17 JULY
 # df = df.drop(index=[0])
 
@@ -35,28 +35,18 @@ df = df.replace('\xa0', np.nan)
 
 # Make first col Meals
 df = df.rename(columns={df.columns[0]: 'Meal'})
-df['Meal'] = df['Meal'].fillna(method='ffill')
+df['Meal'] = df['Meal'].ffill()
 
 # Make empty cells empty
 df = df.replace(np.nan, '')
 
 # Title-ify names
-df = df.applymap(lambda x: str(x).strip())
-df = df.applymap(lambda x: str(x).title())
+df = df.map(lambda x: str(x).strip())
+df = df.map(lambda x: str(x).title())
 
-print(df)
-
-try:
-    # Make datetime rows date string
-    df.iloc[0] = pd.to_datetime(df.iloc[0]).dt.strftime('%B %dth %Y')
-    df.iloc[1] = pd.to_datetime(df.iloc[1]).dt.strftime('%B %dth %Y')
-except:
-    df.iloc[1][1] = '2023-06-26 00:00:00'
-    print("Wrong value in dates column. But proceeding anyway")
-
-    # Make datetime rows date string
-    df.iloc[0] = pd.to_datetime(df.iloc[0]).dt.strftime('%B %dth %Y')
-    df.iloc[1] = pd.to_datetime(df.iloc[1]).dt.strftime('%B %dth %Y')
+# Convert dates to human readable format
+df.iloc[0] = pd.to_datetime(df.iloc[0]).dt.strftime('%B %dth %Y')
+df.iloc[1] = pd.to_datetime(df.iloc[1]).dt.strftime('%B %dth %Y')
 
 
 days = ['Sunday', 'Monday', 'Tuesday',
