@@ -41,8 +41,8 @@ df['Meal'] = df['Meal'].ffill()
 df = df.replace(np.nan, '')
 
 # Title-ify names
-df = df.map(lambda x: str(x).strip())
-df = df.map(lambda x: str(x).title())
+df = df.applymap(lambda x: str(x).strip())
+df = df.applymap(lambda x: str(x).title())
 
 # Convert dates to human readable format
 df.iloc[0] = pd.to_datetime(df.iloc[0]).dt.strftime('%B %dth %Y')
