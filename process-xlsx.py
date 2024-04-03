@@ -14,6 +14,27 @@ df.columns = df.iloc[0]
 df = df.drop(df.index[0])
 
 
+def human_readable_time(date):
+    def add_suffix(day):
+        try:
+            day = int(day)
+        except ValueError:
+            pass
+
+        if day in [1, 21, 31]:
+            return f"{day}st"
+        elif day in [2, 22]:
+            return f"{day}nd"
+        elif day in [3, 23]:
+            return f"{day}rd"
+        else:
+            return f"{day}th"
+    
+    dt = pd.to_datetime(date).dt
+
+    return dt.strftime('%B ') + dt.day.apply(add_suffix) + dt.strftime(' %Y')
+
+
 def capitalize_if_string(i):
     if isinstance(i, str):
         return i.capitalize()
@@ -45,8 +66,8 @@ df = df.applymap(lambda x: str(x).strip())
 df = df.applymap(lambda x: str(x).title())
 
 # Convert dates to human readable format
-df.iloc[0] = pd.to_datetime(df.iloc[0]).dt.strftime('%B %d %Y')
-df.iloc[1] = pd.to_datetime(df.iloc[1]).dt.strftime('%B %d %Y')
+df.iloc[0] = human_readable_time(df.iloc[0])
+df.iloc[1] = human_readable_time(df.iloc[1])
 
 
 days = ['Sunday', 'Monday', 'Tuesday',
