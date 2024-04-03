@@ -45,8 +45,8 @@ df = df.applymap(lambda x: str(x).strip())
 df = df.applymap(lambda x: str(x).title())
 
 # Convert dates to human readable format
-df.iloc[0] = pd.to_datetime(df.iloc[0]).dt.strftime('%B %dth %Y')
-df.iloc[1] = pd.to_datetime(df.iloc[1]).dt.strftime('%B %dth %Y')
+df.iloc[0] = pd.to_datetime(df.iloc[0]).dt.strftime('%B %d %Y')
+df.iloc[1] = pd.to_datetime(df.iloc[1]).dt.strftime('%B %d %Y')
 
 
 days = ['Sunday', 'Monday', 'Tuesday',
