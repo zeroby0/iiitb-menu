@@ -1,4 +1,9 @@
 const scroll_today_into_view = () => {
+    if (window.location.href.indexOf("#install") > -1) {
+        document.getElementById("about").scrollIntoView({ behavior: 'smooth' });
+        return;
+    }
+
     const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
     const element = document.getElementById(today);
 
@@ -41,6 +46,12 @@ const setup_page = () => {
     const buttonRebuild = document.getElementById('rebuildButton');
 
     if(buttonRebuild) {
+
+        // Hide rebuild button on the about page
+        if (window.location.href.indexOf("#install") > -1) {
+            buttonRebuild.style.display = "none";
+        }
+
         buttonRebuild.addEventListener('click', async () => {
             // Just a URL that makes the menu get rebuilt, not API key, don't get too excited
             const url_rebuild = 'https://api.netlify.com/build_hooks/648ffcecb9520931d2053256';
