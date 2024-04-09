@@ -9,10 +9,10 @@ df = pd.read_excel('./data/IIITB-Menu.xlsx')
 # df = df.drop('Unnamed: 1', axis=1)
 df = df.drop(df.columns[1], axis=1) # Drop the meal subtype column
 
+# Commented out as temporary fix on April 10th
 # Set the first row as names of columns
-df.columns = df.iloc[0]
-df = df.drop(df.index[0])
-
+# df.columns = df.iloc[0]
+# df = df.drop(df.index[0])
 
 def human_readable_time(date):
     def add_suffix(day):
@@ -48,6 +48,8 @@ def capitalize_if_string(i):
 # df.columns = [capitalize_if_string(i) for i in df.iloc[0]]
 df.columns = [capitalize_if_string(i) for i in df.columns] # - TEMP FIX 17 JULY
 
+
+
 # Remove name row - TEMP FIX 17 JULY
 # df = df.drop(index=[0])
 
@@ -57,6 +59,8 @@ df = df.replace('\xa0', np.nan)
 # Make first col Meals
 df = df.rename(columns={df.columns[0]: 'Meal'})
 df['Meal'] = df['Meal'].ffill()
+
+
 
 # Make empty cells empty
 df = df.replace(np.nan, '')
