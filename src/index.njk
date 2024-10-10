@@ -34,11 +34,10 @@
         {% for day, daydata in menu %}
           {% include "./includes/DayView.njk" %}
         {% endfor %}
-
-        {% include "./includes/AboutPage.njk" %}
       {% else %}
         {% include "./includes/ErrorPage.njk" %}
       {% endif %}
+      {% include "./includes/AboutPage.njk" %}
     </main>
 
   </body>
