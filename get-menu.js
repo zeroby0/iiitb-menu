@@ -7,57 +7,99 @@ const url_download = 'https://iiitbac-my.sharepoint.com/:x:/r/personal/foodcommi
 const username = process.env.MS_USERNAME;
 const password = process.env.MS_PASSWORD;
 
-const selector_username = 'input[name="loginfmt"]';
+const MAX_RETRIES = 5;
+const TIMEOUT = 30000; // 30 seconds
+const NAVIGATION_TIMEOUT = 45000; // 45 seconds
 
-console.log("Username: ", username);
-// console.log("Password: ", password);
+async function downloadFile(retryCount = 0) {
+  let browser;
+  try {
+    browser = await chromium.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+
+    const context = await browser.newContext({
+      navigationTimeout: NAVIGATION_TIMEOUT,
+      viewport: { width: 1280, height: 720 }
+    });
+    
+    const page = await context.newPage();
+    console.log("Started attempt:", retryCount + 1);
+
+    await page.goto(url_login, {
+      waitUntil: 'networkidle',
+      timeout: NAVIGATION_TIMEOUT
+    });
+    console.log("Opened Login Page");
+
+    const usernameSelector = 'input[name="loginfmt"]';
+    await page.waitForSelector(usernameSelector, { 
+      state: 'visible',
+      timeout: TIMEOUT
+    });
+    
+    await page.fill(usernameSelector, username);
+    await page.click('#idSIButton9');
+    console.log("Entered Username");
+
+    await page.waitForSelector('#i0118', { 
+      state: 'visible',
+      timeout: TIMEOUT
+    });
+    await page.fill('#i0118', password);
+    await page.click('#idSIButton9');
+    console.log("Entered Password");
+
+    await page.waitForSelector('input[name="DontShowAgain"]', {
+      timeout: TIMEOUT
+    });
+    await page.click('input[type="button"]');
+    console.log("Selected Don't remember");
+
+    console.log("Starting Download");
+    const downloadPromise = page.waitForEvent('download', {
+      timeout: TIMEOUT
+    });
+
+    await page.goto(url_download, {
+      waitUntil: 'networkidle',
+      timeout: NAVIGATION_TIMEOUT
+    });
+
+    await browser.close();
+
+    const download = await downloadPromise;
+    const download_path = await download.path();
+
+    if (!fs.existsSync('./data')) {
+      fs.mkdirSync('./data', { recursive: true });
+    }
+
+    fs.copyFileSync(download_path, './data/IIITB-Menu.xlsx');
+    console.log("XLSX file downloaded and copied successfully.");
+
+    return true;
+  } catch (error) {
+    console.error(`Attempt ${retryCount + 1} failed:`, error.message);
+    
+    if (retryCount < MAX_RETRIES - 1) {
+      console.log(`Retrying immediately... (${retryCount + 2}/${MAX_RETRIES})`);
+      return downloadFile(retryCount + 1);
+    } else {
+      throw new Error(`Failed after ${MAX_RETRIES} attempts: ${error.message}`);
+    }
+  } finally {
+    if (browser) {
+      await browser.close();
+    }
+  }
+}
 
 (async () => {
-  const browser = await chromium.launch();
-
-  const context = await browser.newContext();
-  const page = await context.newPage();
-
-  console.log("Started");
-
-  // This page will ask for login
-  await page.goto(url_login);
-  console.log("Opened Login Page");
-
-  // Wait for the sign-in form to appear and fill in the credentials
-  await page.waitForSelector(selector_username);
-  await page.fill(selector_username, username);
-  await page.click('#idSIButton9');
-  console.log("Entered Username");
-
-  await page.waitForSelector('#i0118');
-  await page.fill('#i0118', password);
-  await page.click('#idSIButton9');
-  console.log("Entered Password");
-
-
-  // Keep Signed in?
-  await page.waitForSelector('input[name="DontShowAgain"]')
-  await page.click('input[type="button"]');
-  console.log("Selected Don't remember");
-
-
-  // Start waiting for download before clicking. Note no await.
-  console.log("Starting Download");
-  const downloadPromise = page.waitForEvent('download');
-
-  // download, wait till network response
-  // https://playwright.dev/docs/api/class-page#page-goto
-  page.goto(url_download, {
-        waitUntil: 'commit'
-  });
-
-  const download = await downloadPromise;
-
-  const download_path = await download.path();
-
-  fs.copyFileSync(download_path, './data/IIITB-Menu.xlsx');
-  console.log("XLSX file downloaded and copied.");
-
-  await browser.close();
+  try {
+    await downloadFile();
+  } catch (error) {
+    console.error('Final error:', error.message);
+    process.exit(1);
+  }
 })();
