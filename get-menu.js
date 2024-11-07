@@ -66,8 +66,6 @@ async function downloadFile(retryCount = 0) {
       timeout: NAVIGATION_TIMEOUT
     });
 
-    await browser.close();
-
     const download = await downloadPromise;
     const download_path = await download.path();
 
