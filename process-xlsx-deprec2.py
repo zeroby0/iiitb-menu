@@ -1,12 +1,17 @@
 import json
 import re
+from datetime import datetime, timedelta
+import pandas as pd
+import numpy as np
+import json
 import pandas as pd
 import numpy as np
 from python_calamine.pandas import pandas_monkeypatch
 
-pandas_monkeypatch()
-df = pd.read_excel('./data/IIITB-Menu.xlsx', engine="calamine")
-
+def capitalize_if_string(i):
+    if isinstance(i, str):
+        return i.capitalize()
+    return i
 
 def process_meal_data(series):
     """
@@ -34,10 +39,6 @@ def process_meal_data(series):
             
         # Clean the item string
         item = item.strip()
-
-        item = re.sub('Pakwaan', 'Bakvaas', item)
-        item = re.sub('Pakwan', 'Bakvaas', item)
-
         
         # Check if this is a meal category
         if item in meal_categories:
@@ -64,7 +65,15 @@ def process_meal_data(series):
     return result
 
 
-def human_readable_time(date):
+
+def extract_dates(text):
+    # Extract dates in DD/MM/YYYY format
+    pattern = r'(\d{2}/\d{2}/\d{4})'
+    dates = re.findall(pattern, text)
+    return dates
+
+
+def get_dates_for_weekday(start_date_str, end_date_str, weekday):
     def add_suffix(day):
         try:
             day = int(day)
@@ -79,42 +88,53 @@ def human_readable_time(date):
             return f"{day}rd"
         else:
             return f"{day}th"
+
+    # Dictionary to map weekday names to numbers (0 = Monday, 6 = Sunday)
+    weekdays = {
+        'monday': 0, 'tuesday': 1, 'wednesday': 2, 'thursday': 3,
+        'friday': 4, 'saturday': 5, 'sunday': 6
+    }
     
-    dt = pd.to_datetime(date).dt
+    # Convert string dates to datetime objects
+    start_date = datetime.strptime(start_date_str, '%d/%m/%Y')
+    end_date = datetime.strptime(end_date_str, '%d/%m/%Y')
+    
+    # Get the weekday number
+    target_weekday = weekdays[weekday.lower()]
+    
+    # Find all dates of the specified weekday
+    dates = []
+    current_date = start_date
+    
+    while current_date <= end_date:
+        if current_date.weekday() == target_weekday:
+            # dates.append(current_date.strftime('%d/%m/%Y'))
+            dates.append(current_date.strftime('%B ') + add_suffix(current_date.day) + current_date.strftime(' %Y'))
+        current_date += timedelta(days=1)
+    
+    return dates
 
-    return dt.strftime('%B ') + dt.day.apply(add_suffix) + dt.strftime(' %Y')
 
 
-def capitalize_if_string(i):
-    if isinstance(i, str):
-        return i.capitalize()
-    return i
+df = pd.read_excel('./data/IIITB-Menu.xlsx')
+
+menu_title = df.columns[0]
+
+date_start, date_end = extract_dates(menu_title)
 
 
-# Get names of columns from Row 1
-# Sometimes they somehow add NaNs into the excel file,
-# and so I'd like to ensure it's a string before calling
-# capitalize on it.
-# df.columns = [capitalize_if_string(i) for i in df.iloc[0]]
-df.columns = [capitalize_if_string(i) for i in df.columns] # - TEMP FIX 17 JULY
+# Set the days of the week as column names
+df.columns = [capitalize_if_string(i) for i in df.iloc[0]]
+df = df.drop(df.index[0])
 
-
-# Remove name row - TEMP FIX 17 JULY
-# df = df.drop(index=[0])
-
-# Make empty cells NaN
-df = df.replace('\xa0', np.nan)
 
 # Make empty cells empty
+df = df.replace('\xa0', np.nan)
 df = df.replace(np.nan, '')
 
 # Title-ify names
 df = df.applymap(lambda x: str(x).strip())
 df = df.applymap(lambda x: str(x).title())
-
-# Convert dates to human readable format
-df.iloc[0] = human_readable_time(df.iloc[0])
-df.iloc[1] = human_readable_time(df.iloc[1])
 
 
 days = ['Sunday', 'Monday', 'Tuesday',
@@ -122,18 +142,13 @@ days = ['Sunday', 'Monday', 'Tuesday',
 meals = ['Breakfast', 'Lunch', 'Snacks', 'Dinner']
 
 data = {}
-
-print(df)
-
-data = {}
 for day in days:
     data[day] = {
-        'dates': list(df[day][0:2]), 
+        'dates': get_dates_for_weekday(date_start, date_end, day), 
         'catalog': process_meal_data(df[day])
     }
 
 print(data)
-
 
 with open('./data/menu.json', 'w') as jsonfile:
     json.dump(data, jsonfile)

@@ -2,3 +2,5 @@ node_modules
 _site
 *.xlsx
 menu.json
+.DS_Store
+*.pyc
