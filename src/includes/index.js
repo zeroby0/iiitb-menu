@@ -15,6 +15,9 @@ const scroll_today_into_view = () => {
     }
 };
 
+function showCongratulationsAlert() {
+  alert("Congratulations 🎊 Bhagwan Pruthvi for 3 papers (2 in ISVLSI and 1 in ISLPED) getting accepted, always an inspiration and pride to our lab");
+}
 
 const align_section = (selector) => {
     const sectionDivs = document.querySelectorAll(selector);
@@ -75,11 +78,11 @@ const setup_page = () => {
 
     console.log("Added click handler for rebuild button");
     console.log("Page initialisation complete");
+
+    showCongratulationsAlert();
 };
 
-function showCongratulationsAlert() {
-  alert("Congratulations 🎊 Bhagwan Pruthvi for 3 papers (2 in ISVLSI and 1 in ISLPED) getting accepted, always an inspiration and pride to our lab");
-}
+
 
 if (document.readyState !== 'loading') {
     // Document has already finished loading.
@@ -88,7 +91,6 @@ if (document.readyState !== 'loading') {
     
     scroll_today_into_view();
     setup_page();
-    showCongratulationsAlert();
 }
 
 
