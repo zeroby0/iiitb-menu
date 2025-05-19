@@ -16,7 +16,19 @@ const scroll_today_into_view = () => {
 };
 
 function showCongratulationsAlert() {
-  alert("Congratulations 🎊 Bhagwan Pruthvi for 3 papers (2 in ISVLSI and 1 in ISLPED) getting accepted, always an inspiration and pride to our lab");
+  // Check if localStorage is available
+  if (typeof localStorage !== 'undefined') {
+    // Get current count from localStorage (default to 0 if not set)
+    const alertCount = parseInt(localStorage.getItem('congratsAlertCount') || '0');
+    
+    // Only show alert if it has been shown fewer than 3 times
+    if (alertCount < 3) {
+      alert("Congratulations 🎊 Bhagwan Pruthvi for 3 papers (2 in ISVLSI and 1 in ISLPED) getting accepted, always an inspiration and pride to our lab");
+      
+      // Increment the count and store it back in localStorage
+      localStorage.setItem('congratsAlertCount', (alertCount + 1).toString());
+    }
+  }
 }
 
 const align_section = (selector) => {
