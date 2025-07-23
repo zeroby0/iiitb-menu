@@ -1,8 +1,9 @@
 # IIIT-B Menu
 
-https://menu.avoggu.com/
+**Link**: https://menu.avoggu.com/
 
-![Screenshot](./screenshot.png)
+**Screenshot**
+![Screenshot](./screenshot.png | width=200)
 
 * Excel file is downloaded via `get-menu.js`
 * `process-gemini.js` uploads the downloaded file to Gemini and converts it to JSON
