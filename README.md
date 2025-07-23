@@ -3,7 +3,7 @@
 **Link**: https://menu.avoggu.com/
 
 **Screenshot**
-![Screenshot](./screenshot.png | width=200)
+<img src="./screenshot.png" width="200" alt="Screenshot">
 
 * Excel file is downloaded via `get-menu.js`
 * `process-gemini.js` uploads the downloaded file to Gemini and converts it to JSON
