@@ -92,10 +92,9 @@ print(response.parsed)
 
 menu_json = {}
 for day in days:
+    # Tryna ensure days of the week are in the right order
     for i in response.parsed:
-        # Tryna ensure days of the week are in the right order
         if i['day_of_the_week'] == day:
-            del(i['day_of_the_week'])
             menu_json[day] = i
 
 

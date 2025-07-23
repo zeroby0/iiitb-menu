@@ -1,11 +1,13 @@
 const fs = require('fs');
 const { chromium } = require('playwright');
+const { authenticator } = require('otplib')
 
 const url_login = 'https://iiitbac-my.sharepoint.com/:x:/r/personal/foodcommittee_iiitb_ac_in/Documents/IIITB-Menu.xlsx?d=w9345dc2a600f4e5a824d9510f774cddf&csf=1&web=1&e=cMYLbj';
 const url_download = 'https://iiitbac-my.sharepoint.com/:x:/r/personal/foodcommittee_iiitb_ac_in/Documents/IIITB-Menu.xlsx';
 
 const username = process.env.MS_USERNAME;
 const password = process.env.MS_PASSWORD;
+const otpsecret = process.env.MS_OTPSECRET;
 
 const MAX_RETRIES = 5;
 const TIMEOUT = 30000; // 30 seconds
@@ -32,6 +34,7 @@ async function downloadFile(retryCount = 0) {
     });
     console.log("Opened Login Page");
 
+    // FILL USERNAME
     const usernameSelector = 'input[name="loginfmt"]';
     await page.waitForSelector(usernameSelector, { 
       state: 'visible',
@@ -42,13 +45,27 @@ async function downloadFile(retryCount = 0) {
     await page.click('#idSIButton9');
     console.log("Entered Username");
 
-    await page.waitForSelector('#i0118', { 
+    // FILL PASSWORD
+    const passwordSelector = '#i0118'
+    await page.waitForSelector(passwordSelector, { 
       state: 'visible',
       timeout: TIMEOUT
     });
-    await page.fill('#i0118', password);
+    await page.fill(passwordSelector, password);
     await page.click('#idSIButton9');
     console.log("Entered Password");
+
+    // FILL TOTP
+    const totpSelector = 'input[name="otc"]';
+    await page.waitForSelector(totpSelector, { 
+      state: 'visible',
+      timeout: TIMEOUT
+    });
+
+    const totp = authenticator.generate(otpsecret);
+    await page.fill(totpSelector, totp);
+    await page.click('input[type="submit"]');
+    console.log("Entered TOTP");
 
     await page.waitForSelector('input[name="DontShowAgain"]', {
       timeout: TIMEOUT
