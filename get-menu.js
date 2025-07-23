@@ -42,7 +42,7 @@ async function downloadFile(retryCount = 0) {
     });
     
     await page.fill(usernameSelector, username);
-    await page.click('#idSIButton9');
+    await page.click('input[type="submit"]');
     console.log("Entered Username");
 
     // FILL PASSWORD
@@ -52,7 +52,7 @@ async function downloadFile(retryCount = 0) {
       timeout: TIMEOUT
     });
     await page.fill(passwordSelector, password);
-    await page.click('#idSIButton9');
+    await page.click('input[type="submit"]');
     console.log("Entered Password");
 
     // FILL TOTP
