@@ -4,6 +4,8 @@ import pandas as pd
 import numpy as np
 from python_calamine.pandas import pandas_monkeypatch
 from google import genai
+import pprint
+
 
 pandas_monkeypatch()
 df = pd.read_excel("./data/IIITB-Menu.xlsx", engine="calamine")
@@ -84,7 +86,7 @@ config = {
 
 response = llm.models.generate_content(
     model="gemini-2.5-flash",
-    contents=["Convert the following table into JSON. Format dates like July 21st, ignoring Year and Time.\n", df.to_string()],
+    contents=["Convert the following table into JSON. Format dates like July 21st, ignoring Year and Time. Ignore empty entries with only white space.\n", df.to_string()],
     config=config,
 )
 
@@ -97,8 +99,10 @@ for day in days:
         if i['day_of_the_week'] == day:
             menu_json[day] = i
 
+            for meal in menu_json[day]['catalog']:
+                meal['items'] = [j for j in meal['items'] if j.strip() != '']
 
-print(menu_json)
+pprint.pp(menu_json)
 
 with open('./data/menu.json', 'w') as jsonfile:
     json.dump(menu_json, jsonfile)
